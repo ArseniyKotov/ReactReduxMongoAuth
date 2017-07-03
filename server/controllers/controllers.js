@@ -35,6 +35,12 @@ module.exports = {
       res
         .send({token: tokenForUser(req.user)});
     }
+  },
+  data: {
+    get: function(req, res) {
+      // user is already authed
+      res.send({message: 'Here is some secret data'});
+    }
   }
   
 };

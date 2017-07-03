@@ -8,7 +8,8 @@
     "start": "nodemon server/index.js",
     "test": "mocha --compilers js:babel-core/register --require ./test/test_helper.js --recursive ./test",
     "test:watch": "npm run test -- --watch",
-    "bundle": "webpack --watch"
+    "bundle": "webpack --watch",
+    "postinstall": "webpack"
   },
   "author": "",
   "license": "",

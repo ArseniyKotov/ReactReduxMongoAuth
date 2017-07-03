@@ -5,6 +5,7 @@ const passport = require('passport');
 const requireAuth = passport.authenticate('jwt', {session: false});
 const requireSignin = passport.authenticate('local', { session: false });
 
+router.get('/api/secretroute', requireAuth, controllers.data.get);
 router.post('/api/signin', requireSignin, controllers.authentication.signIn);
 router.post('/api/signup', controllers.authentication.createUser);
 

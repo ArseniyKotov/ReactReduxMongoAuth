@@ -1,4 +1,4 @@
-import { AUTH_USER, UNAUTH_USER, AUTH_ERR } from '../actions/types';
+import { AUTH_USER, UNAUTH_USER, AUTH_ERR, GET_DATA } from '../actions/types';
 
 export default function(state = {}, action) {
   switch(action.type) {
@@ -8,6 +8,8 @@ export default function(state = {}, action) {
       return {...state, authenticated: false};
     case AUTH_ERR:
       return {...state, error: action.payload};
+    case GET_DATA:
+      return {...state, message: action.payload}
   }
   return state;
 }

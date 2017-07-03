@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { browserHistory } from 'react-router';
-import { AUTH_USER, UNAUTH_USER, AUTH_ERR } from './types';
+import { AUTH_USER, UNAUTH_USER, AUTH_ERR, GET_DATA } from './types';
 const API_URL = process.env.IP || 'http://localhost:3000';
 
 export function signinUser({ email, password }) {
@@ -38,14 +38,33 @@ export function signoutUser() {
 
 export function signUpUser({ email, password }) {
   return function (dispatch) {
-    axios.post('/api/signup', { email, password })
-      .then((response) => {
-        dispatch({ type: AUTH_USER });
-        localStorage.setItem('token', response.data.token);
-        browserHistory.push('/feature');
-      })
-      .catch((error) => {
-        dispatch(authError(error.response.data.error))
-      })
+    axios
+        .post('/api/signup', { email, password })
+        .then((response) => {
+          dispatch({ type: AUTH_USER });
+          localStorage.setItem('token', response.data.token);
+          browserHistory.push('/feature');
+        })
+        .catch((error) => {
+          dispatch(authError(error.response.data.error))
+        })
+  }
+}
+
+export function getData() {
+  return function(dispatch) {
+    axios
+        .get('/api/secretroute', 
+            {
+              headers : {
+                authorization: localStorage.getItem('token')
+              }
+            })
+        .then((response) => {
+          dispatch({type: GET_DATA, payload: response.data.message})
+        })
+        .catch((error) => {
+          dispatch(authError('Invalid credentials'));
+        })
   }
 }
