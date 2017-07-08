@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 export default function(ComposedComponent) {
   class Authentication extends Component {
-    static PropTypes = {
+    static PropTypes =  {
       router: PropTypes.object,
     }
 

@@ -4,18 +4,18 @@ const bcrypt = require('bcrypt-nodejs');
 
 module.exports = {
   authentication: {
-    createUser: function(email, password, cb) {
-      User.findOne({email: email}, function(err, user) {
+    createUser(email, password, cb) {
+      User.findOne({ email }, (err, user) => {
         if (err) {
           cb(err, null);
         } else if (user) {
           cb({ error: 'This email is already in use' }, null);
         } else {
           const user = new User({
-            email: email,
-            password: password
+            email,
+            password,
           });
-          user.save(function(err, data) {
+          user.save((err, data) => {
             if (err) {
               cb(err, null);
             } else {
@@ -24,6 +24,6 @@ module.exports = {
           });
         }
       });
-    }
-  }
+    },
+  },
 };

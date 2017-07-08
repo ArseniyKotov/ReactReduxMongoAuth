@@ -1,5 +1,6 @@
 const db = require('./dbConfig');
 const mongoose = require('mongoose');
+
 const Schema = mongoose.Schema;
 const bcrypt = require('bcrypt-nodejs');
 
@@ -7,18 +8,18 @@ const userSchema = new Schema({
   email: {
     type: String,
     unique: true,
-    lowercase: true
+    lowercase: true,
   },
-  password: String
+  password: String,
 });
 
-userSchema.pre('save', function(cb) {
+userSchema.pre('save', function (cb) {
   const user = this;
-  bcrypt.genSalt(10, function(err, salt) {
+  bcrypt.genSalt(10, (err, salt) => {
     if (err) {
       cb(err);
     } else {
-      bcrypt.hash(user.password, salt, null, function(err, hash) {
+      bcrypt.hash(user.password, salt, null, (err, hash) => {
         if (err) {
           cb(err);
         } else {
@@ -30,10 +31,8 @@ userSchema.pre('save', function(cb) {
   });
 });
 
-userSchema.methods.comparePassword = function(potentialPassword, cb) {
-  console.log('this password', this.password);
-  
-  bcrypt.compare(potentialPassword, this.password, function(err, result) {
+userSchema.methods.comparePassword = function (potentialPassword, cb) {
+  bcrypt.compare(potentialPassword, this.password, (err, result) => {
     if (err) {
       cb(err, null);
     } else {
@@ -44,5 +43,4 @@ userSchema.methods.comparePassword = function(potentialPassword, cb) {
 
 const UserClass = mongoose.model('user', userSchema);
 module.exports = UserClass;
-
 

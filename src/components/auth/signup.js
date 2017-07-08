@@ -26,15 +26,16 @@ class Signup extends Component {
         </div>
       );
     }
+    return (null);
   }
 
   render() {
     const { handleSubmit } = this.props;
     return (
       <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
-        <Field name="email" type="text" component={renderField} className="form-control" label="Email"/>
-        <Field name="password1" component={renderField} type="password" className="form-control" label="Password"/>
-        <Field name="password2" component={renderField} type="password" className="form-control" label="Confirm Password"/>
+        <Field name="email" type="text" component={renderField} className="form-control" label="Email" />
+        <Field name="password1" component={renderField} type="password" className="form-control" label="Password" />
+        <Field name="password2" component={renderField} type="password" className="form-control" label="Confirm Password" />
         {this.renderAlert()}
         <button className="btn btn-primary" action="submit">Sign Up</button>
       </form>
@@ -42,7 +43,7 @@ class Signup extends Component {
   }
 }
 
-function validate(values) {
+const validate = (values) => {
   const errors = {};
   if (values.email === undefined) {
     return errors;
@@ -63,11 +64,9 @@ function validate(values) {
     errors.email = 'You must enter a valid email address';
   }
   return errors;
-}
+};
 
-function mapStateToProps(state) {
-  return { errorMessage: state.auth.error };
-}
+const mapStateToProps = state => ({ errorMessage: state.auth.error });
+const form = reduxForm({ form: 'signup', validate })(Signup);
 
-var form = reduxForm({ form: 'signup', validate })(Signup);
 export default connect(mapStateToProps, actions)(form);

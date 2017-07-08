@@ -10,17 +10,17 @@ const PORT = process.env.PORT || '3000';
 
 const app = express();
 app.use(morgan('combined'));
-app.use(bodyParser.json({type: '*/*'}));
+app.use(bodyParser.json({ type: '*/*' }));
 
 app.use(cors());
 app.use(express.static(path.join(__dirname, '../public')));
 app.use(router);
-app.get('*', function (request, response) {
+app.get('*', (request, response) => {
   response.sendFile(path.join(__dirname, '../public/index.html'));
 });
 
 
-app.listen(PORT, function () {
+app.listen(PORT, () => {
   console.log('listening right now on port', PORT);
 });
 

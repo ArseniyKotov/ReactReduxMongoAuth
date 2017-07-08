@@ -2,7 +2,8 @@ const router = require('express').Router();
 const controllers = require('../controllers/controllers.js');
 const passportService = require('../services/passport');
 const passport = require('passport');
-const requireAuth = passport.authenticate('jwt', {session: false});
+
+const requireAuth = passport.authenticate('jwt', { session: false });
 const requireSignin = passport.authenticate('local', { session: false });
 
 router.get('/api/secretroute', requireAuth, controllers.data.get);

@@ -7,16 +7,15 @@ const ExtractJwt = require('passport-jwt').ExtractJwt;
 const LocalStrategy = require('passport-local');
 
 // Create Local Strategy
-const localLogin = new LocalStrategy({ usernameField: 'email' }, function(email, password, done) {
-
-  User.findOne({email: email}, function(err, user) {
+const localLogin = new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
+  User.findOne({ email }, (err, user) => {
     if (err) {
       done(err, false);
     } else if (!user) {
       done(null, false);
     } else {
       // check if passwords matchup
-      user.comparePassword(password, function(err, result) {
+      user.comparePassword(password, (err, result) => {
         if (err) {
           done(err, null);
         } else if (!result) {
@@ -32,12 +31,12 @@ const localLogin = new LocalStrategy({ usernameField: 'email' }, function(email,
 // Set up options
 const jwtOptions = {
   jwtFromRequest: ExtractJwt.fromHeader('authorization'),
-  secretOrKey: config.secret
+  secretOrKey: config.secret,
 };
 
 // Create strat
-const jwtLogin = new JwtStrategy(jwtOptions, function(payload, done) {
-  User.findById(payload.sub, function(err, user) {
+const jwtLogin = new JwtStrategy(jwtOptions, (payload, done) => {
+  User.findById(payload.sub, (err, user) => {
     if (err) {
       done(err, false);
     } else if (user) {

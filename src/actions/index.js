@@ -1,16 +1,22 @@
 import axios from 'axios';
 import { browserHistory } from 'react-router';
 import { AUTH_USER, UNAUTH_USER, AUTH_ERR, GET_DATA } from './types';
-const API_URL = process.env.IP || 'http://localhost:3000';
 
-export function signinUser({ email, password }) {
+export const authError = function authError(err) {
+  return {
+    type: AUTH_ERR,
+    payload: err,
+  };
+};
+
+export const signinUser = function signinUser({ email, password }) {
   // submit email and password to server
   // if good then update state to indicate auth is good, save jwt token, redirect to route
   // if bad show error to user
-  return function(dispatch) {
+  return function (dispatch) {
     axios.post('/api/signin', { email, password })
       .then((response) => {
-        dispatch({type: AUTH_USER});
+        dispatch({ type: AUTH_USER });
         localStorage.setItem('token', response.data.token);
         browserHistory.push('/feature');
       })
@@ -18,26 +24,20 @@ export function signinUser({ email, password }) {
         dispatch(authError('Bad Login Credentials'));
       });
   };
-}
+};
 
-export function authError(err) {
-  return {
-    type: AUTH_ERR,
-    payload: err,
-  };
-}
 
-export function signoutUser() {
+export const signoutUser = function signoutUser() {
   // need to destroy the token
   // set auth state to false
   localStorage.removeItem('token');
   return {
     type: UNAUTH_USER,
   };
-}
+};
 
-export function signUpUser({ email, password }) {
-  return function(dispatch) {
+export const signUpUser = function signUpUser({ email, password }) {
+  return function (dispatch) {
     axios
       .post('/api/signup', { email, password })
       .then((response) => {
@@ -49,22 +49,22 @@ export function signUpUser({ email, password }) {
         dispatch(authError(error.response.data.error));
       });
   };
-}
+};
 
-export function getData() {
-  return function(dispatch) {
+export const getData = function getData() {
+  return function (dispatch) {
     axios
-      .get('/api/secretroute', 
-        {
-          headers: {
-            authorization: localStorage.getItem('token'),
-          },
-        })
+      .get('/api/secretroute',
+      {
+        headers: {
+          authorization: localStorage.getItem('token'),
+        },
+      })
       .then((response) => {
-        dispatch({type: GET_DATA, payload: response.data.message});
+        dispatch({ type: GET_DATA, payload: response.data.message });
       })
       .catch((error) => {
         dispatch(authError('Invalid credentials'));
       });
   };
-}
+};

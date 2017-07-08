@@ -26,8 +26,6 @@ class HiddenPage extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return { message: state.auth.message };
-}
+const mapStateToProps = state => ({ message: state.auth.message });
 
 export default connect(mapStateToProps, actions)(HiddenPage);

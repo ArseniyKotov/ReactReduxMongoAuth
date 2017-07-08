@@ -11,16 +11,15 @@ class Header extends Component {
           <Link to="/signout" className="nav-link">Sign Out</Link>
         </li>
       );
-    } else {
-      return [
-        <li key="1" className="nav-item">
-          <Link className="nav-link" to="/signin">Sign In</Link>
-        </li>,
-        <li key="2" className="nav-item">
-          <Link className="nav-link" to="/signup">Sign Up</Link>
-        </li>,
-      ];
     }
+    return [
+      <li key="1" className="nav-item">
+        <Link className="nav-link" to="/signin">Sign In</Link>
+      </li>,
+      <li key="2" className="nav-item">
+        <Link className="nav-link" to="/signup">Sign Up</Link>
+      </li>,
+    ];
   }
 
   render() {
@@ -35,8 +34,6 @@ class Header extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return { authed: state.auth.authenticated };
-}
+const mapStateToProps = state => ({ authed: state.auth.authenticated });
 
 export default connect(mapStateToProps)(Header);
