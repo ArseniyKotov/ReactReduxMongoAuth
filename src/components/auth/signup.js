@@ -9,13 +9,13 @@ const renderField = ({ input, label, type, meta: { touched, error, warning } }) 
     <input className="form-control" {...input} type={type} />
     {touched && error && <span className="text-danger">{error}</span>}
   </fieldset>
-)
+);
 
 class Signup extends Component {
 
   handleFormSubmit({ email, password1 }) {
     const password = password1;
-    this.props.signUpUser({ email, password })
+    this.props.signUpUser({ email, password });
   }
 
   renderAlert() {
@@ -59,15 +59,15 @@ function validate(values) {
   if (!values.email) {
     errors.email = 'You must provide and email';
   }
-  if(values.email.indexOf('@') === -1) {
+  if (values.email.indexOf('@') === -1) {
     errors.email = 'You must enter a valid email address';
   }
   return errors;
 }
 
 function mapStateToProps(state) {
-  return { errorMessage: state.auth.error }
+  return { errorMessage: state.auth.error };
 }
 
 var form = reduxForm({ form: 'signup', validate })(Signup);
-export default connect(mapStateToProps, actions)(form)
+export default connect(mapStateToProps, actions)(form);

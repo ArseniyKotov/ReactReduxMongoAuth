@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 export default function(ComposedComponent) {
   class Authentication extends Component {
     static PropTypes = {
-      router: PropTypes.object
+      router: PropTypes.object,
     }
 
     componentWillMount() {
@@ -21,13 +21,13 @@ export default function(ComposedComponent) {
     }
 
     render() {
-      return <ComposedComponent {...this.props} />
+      return <ComposedComponent {...this.props} />;
     }
   }
 
   function mapStateToProps(state) {
-    return { authenticated: state.auth.authenticated}
+    return { authenticated: state.auth.authenticated};
   }
 
-  return connect(mapStateToProps)(Authentication)
+  return connect(mapStateToProps)(Authentication);
 }

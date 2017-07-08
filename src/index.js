@@ -18,16 +18,16 @@ const createStoreWithMiddleware = applyMiddleware(reduxThunk)(createStore);
 const store = createStoreWithMiddleware(reducers);
 const token = localStorage.getItem('token');
 if (token) {
-  store.dispatch({type: AUTH_USER})
+  store.dispatch({type: AUTH_USER});
 }
 
 ReactDOM.render(<Provider store={store}>
-                  <Router history={browserHistory}>
-                    <Route path="/" component={App}>
-                      <Route path='signin' component={Signin} />
-                      <Route path='signout' component={Signout} />
-                      <Route path='signup' component={Signup} />
-                      <Route path='feature' component={RequireAuth(HiddenPage)} />
-                    </Route>
-                  </Router>
-                </Provider>, document.getElementById('main'));
+  <Router history={browserHistory}>
+    <Route path="/" component={App}>
+      <Route path="signin" component={Signin} />
+      <Route path="signout" component={Signout} />
+      <Route path="signup" component={Signup} />
+      <Route path="feature" component={RequireAuth(HiddenPage)} />
+    </Route>
+  </Router>
+</Provider>, document.getElementById('main'));
